@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
+use frontend\models\Store;
+use yii\helpers\ArrayHelper;
 
 /** @var yii\web\View $this */
 /** @var frontend\models\Device $model */
@@ -14,11 +17,23 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'store_id')->textInput() ?>
+    <!-- <?= $form->field($model, 'store_id')->textInput() ?> -->
 
-    <?= $form->field($model, 'created_at')->textInput() ?>
+    <?= Select2::widget([
+        'model' => $model,
+        'attribute' => 'store_id',
+        'data' => ArrayHelper::map(Store::find()->all(), 'id', 'title'),
+        'options' => [
+            'placeholder' => 'Select a type ...',
+        ],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]) ?>
 
     <div class="form-group">
+        <?= Html::a('Cancel', ['device/index'], ['class' => 'btn btn-outline-secondary']) ?>
+
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
 

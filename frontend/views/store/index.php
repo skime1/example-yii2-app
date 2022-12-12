@@ -4,7 +4,9 @@ use frontend\models\Store;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use kartik\grid\DataColumn;
+use yii\bootstrap5\Modal;
 
 /** @var yii\web\View $this */
 /** @var frontend\models\search\StoreSearch $searchModel */
@@ -15,23 +17,28 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="store-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Store', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
-            'title',
-            'created_at',
+            [
+                'attribute' => 'title',
+                'format' => 'raw',
+                'value' => function($model){
+                    return Html::a(Html::encode($model->title), [
+                        'store/view-devices',
+                        'id' => $model->id
+                    ],
+                    ['class' => 'modal-first']);
+                }
+            ],
+            [
+
+                'attribute' => 'created_at',
+                'format' => ['date', 'php:H:m d.m.Y'],
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Store $model, $key, $index, $column) {
@@ -39,7 +46,16 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
+        'panel' => [
+            'heading'=>'<h3 class="panel-title"><i class="fas fa-globe"></i>Stores</h3>',
+            'type'=>'success',
+            'before'=>Html::a('<i class="fas fa-plus"></i> Create', ['create'], ['class' => 'btn btn-success']),
+            'after'=>Html::a('<i class="fas fa-redo"></i> Reset', ['index'], ['class' => 'btn btn-outline-secondary']),
+            'footer'=>false
+        ],
+    
     ]); ?>
 
+<?= $this->render('_modal'); ?>
 
 </div>

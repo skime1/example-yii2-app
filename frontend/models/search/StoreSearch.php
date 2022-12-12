@@ -22,14 +22,7 @@ class StoreSearch extends Store
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function scenarios()
-    {
-        // bypass scenarios() implementation in the parent class
-        return Model::scenarios();
-    }
+
 
     /**
      * Creates data provider instance with search query applied
@@ -58,11 +51,11 @@ class StoreSearch extends Store
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'created_at' => $this->created_at,
+            '{{%store}}.id' => $this->id,
+            '{{%store}}.created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', '{{%store}}.title', $this->title]);
 
         return $dataProvider;
     }

@@ -8,6 +8,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
+use yii\data\ActiveDataProvider;
+
 /**
  * StoreController implements the CRUD actions for Store model.
  */
@@ -58,6 +60,25 @@ class StoreController extends Controller
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
+    }
+
+    public function actionViewDevices($id)
+    {
+
+        $query = Store::findOne($id)
+                ->getDevices()
+                ->select(['id', 'title']);
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+
+        if (\Yii::$app->request->isAjax) {
+            \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+            return $this->renderAjax('viewDevices', ['dataProvider' => $dataProvider]);
+        }
+
+        return $this->render('viewDevices', ['dataProvider' => $dataProvider]);
     }
 
     /**

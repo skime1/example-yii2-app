@@ -3,8 +3,12 @@
 use frontend\models\Device;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use yii\grid\ActionColumn;
-use yii\grid\GridView;
+use kartik\grid\GridView;
+use kartik\grid\DataColumn;
+use kartik\select2\Select2;
+
 
 /** @var yii\web\View $this */
 /** @var frontend\models\search\DeviceSearch $searchModel */
@@ -15,24 +19,23 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="device-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Device', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'title',
-            'store_id',
-            'created_at',
+            [
+                'label' => 'Store',
+                'attribute' => 'store_id',
+                'value' => 'store.title',
+                'filterType' => GridView::FILTER_SELECT2,
+            ],
+            [
+                'attribute' => 'created_at',
+                'format' => ['date', 'php:H:m d.m.Y'],
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Device $model, $key, $index, $column) {
@@ -40,7 +43,17 @@ $this->params['breadcrumbs'][] = $this->title;
                  }
             ],
         ],
+        'panel' => [
+            'heading'=>'<h3 class="panel-title"><i class="fas fa-globe"></i>Devices</h3>',
+            'type'=>'success',
+            'before'=>Html::a('<i class="fas fa-plus"></i> Create', ['create'], ['class' => 'btn btn-success']),
+            'after'=>Html::a('<i class="fas fa-redo"></i> Reset', ['index'], ['class' => 'btn btn-outline-secondary']),
+            'footer'=>false
+        ],
     ]); ?>
 
 
 </div>
+
+
+<?php 

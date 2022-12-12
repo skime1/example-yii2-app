@@ -31,7 +31,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'title',
-            'created_at',
+            [
+
+                'attribute' => 'created_at',
+                'format' => ['date', 'php:H:m d.m.Y'],
+            ],
         ],
     ]) ?>
 

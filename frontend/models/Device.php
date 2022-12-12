@@ -16,6 +16,19 @@ use Yii;
  */
 class Device extends \yii\db\ActiveRecord
 {
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => \yii\behaviors\TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => false, 
+                // 'value' => new Expression('NOW()'), 
+            ],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -30,7 +43,7 @@ class Device extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'created_at'], 'required'],
+            [['title'], 'required'],
             [['store_id', 'created_at'], 'integer'],
             [['title'], 'string', 'max' => 11],
             [['title'], 'unique'],

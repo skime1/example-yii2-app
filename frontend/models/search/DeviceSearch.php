@@ -17,8 +17,8 @@ class DeviceSearch extends Device
     public function rules()
     {
         return [
-            [['id', 'store_id', 'created_at'], 'integer'],
-            [['title'], 'safe'],
+            [['id',  'created_at'], 'integer'],
+            [['title', 'store_id'], 'safe'],
         ];
     }
 
@@ -40,12 +40,15 @@ class DeviceSearch extends Device
      */
     public function search($params)
     {
-        $query = Device::find();
+        $query = Device::find()->joinWith('store');
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            // 'pagination' => [
+            //     'pageSize' => 1, 
+            // ],
         ]);
 
         $this->load($params);
@@ -58,12 +61,12 @@ class DeviceSearch extends Device
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'store_id' => $this->store_id,
-            'created_at' => $this->created_at,
+            '{{%device}}.id' => $this->id,
+            'store.title' => $this->store_id,
+            '{{%device}}.created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', '{{%device}}.title', $this->title]);
 
         return $dataProvider;
     }
