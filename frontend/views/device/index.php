@@ -1,9 +1,10 @@
 <?php
 
-use frontend\models\Device;
+use common\models\Device;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
+use frontend\hellpers\StoreHelper;
 use yii\grid\ActionColumn;
 use kartik\grid\GridView;
 use kartik\grid\DataColumn;
@@ -25,16 +26,30 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'title',
+            [
+                'attribute' => 'title',
+                'filterInputOptions' => [
+                    'class'       => 'form-control',
+                    'placeholder' => 'Type in some characters...',
+                ],
+            ],
             [
                 'label' => 'Store',
                 'attribute' => 'store_id',
                 'value' => 'store.title',
                 'filterType' => GridView::FILTER_SELECT2,
+                'filter' => StoreHelper::getExistingStoreTitles(),
+                'filterWidgetOptions' => [
+                    'pluginOptions' => [
+                        'placeholder' => 'Select a store ...',
+                        'allowClear' => true,
+                    ],
+                ],
             ],
             [
                 'attribute' => 'created_at',
                 'format' => ['date', 'php:H:m d.m.Y'],
+                
             ],
             [
                 'class' => ActionColumn::className(),

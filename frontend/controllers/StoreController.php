@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Store;
+use common\models\Store;
 use frontend\models\search\StoreSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

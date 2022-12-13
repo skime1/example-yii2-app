@@ -1,13 +1,14 @@
 <?php
 
+use common\models\Store;
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use frontend\hellpers\StoreHelper;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
-use frontend\models\Store;
-use yii\helpers\ArrayHelper;
 
 /** @var yii\web\View $this */
-/** @var frontend\models\Device $model */
+/** @var common\models\Device $model */
 /** @var yii\widgets\ActiveForm $form */
 ?>
 
@@ -22,7 +23,7 @@ use yii\helpers\ArrayHelper;
     <?= Select2::widget([
         'model' => $model,
         'attribute' => 'store_id',
-        'data' => ArrayHelper::map(Store::find()->all(), 'id', 'title'),
+        'data' => StoreHelper::getExistingStoreTitles(),
         'options' => [
             'placeholder' => 'Select a type ...',
         ],

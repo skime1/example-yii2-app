@@ -4,10 +4,10 @@ namespace frontend\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Store;
+use common\models\Store;
 
 /**
- * StoreSearch represents the model behind the search form of `frontend\models\Store`.
+ * StoreSearch represents the model behind the search form of `common\models\Store`.
  */
 class StoreSearch extends Store
 {

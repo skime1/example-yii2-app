@@ -4,10 +4,10 @@ namespace frontend\models\search;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use frontend\models\Device;
+use common\models\Device;
 
 /**
- * DeviceSearch represents the model behind the search form of `frontend\models\Device`.
+ * DeviceSearch represents the model behind the search form of `common\models\Device`.
  */
 class DeviceSearch extends Device
 {
@@ -40,7 +40,8 @@ class DeviceSearch extends Device
      */
     public function search($params)
     {
-        $query = Device::find()->joinWith('store');
+        $query = Device::find()
+            ->joinWith('store');
 
         // add conditions that should always apply here
 
@@ -62,11 +63,12 @@ class DeviceSearch extends Device
         // grid filtering conditions
         $query->andFilterWhere([
             '{{%device}}.id' => $this->id,
-            'store.title' => $this->store_id,
+            //'store.title' => $this->store_id,
             '{{%device}}.created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', '{{%device}}.title', $this->title]);
+        $query->andFilterWhere(['like', '{{%device}}.title', $this->title])->
+            andFilterWhere(['like', 'store_id', $this->store_id]);
 
         return $dataProvider;
     }

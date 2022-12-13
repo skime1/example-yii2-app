@@ -1,6 +1,6 @@
 <?php
 
-use frontend\models\Store;
+use common\models\Store;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -9,7 +9,7 @@ use kartik\grid\DataColumn;
 use yii\bootstrap5\Modal;
 
 /** @var yii\web\View $this */
-/** @var frontend\models\search\StoreSearch $searchModel */
+/** @var common\models\search\StoreSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Stores';
@@ -35,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 }
             ],
             [
-
                 'attribute' => 'created_at',
                 'format' => ['date', 'php:H:m d.m.Y'],
             ],

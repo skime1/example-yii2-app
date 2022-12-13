@@ -2,7 +2,7 @@
 
 namespace frontend\controllers;
 
-use frontend\models\Device;
+use common\models\Device;
 use frontend\models\search\DeviceSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
