@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+use frontend\helpers\ContentHelper;
+
 /** @var yii\web\View $this */
 /** @var common\models\Device $model */
 
@@ -34,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'store_id',
                 'value' => function($model){
-                    return $model->store->title;
+                    return ContentHelper::getValueRelationalModel($model, 'store', 'title');
                 }
             ],
             'created_at',

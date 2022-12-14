@@ -1,6 +1,6 @@
 <?php
 
-namespace frontend\hellpers;
+namespace frontend\helpers;
 
 use common\models\Store;
 use yii\helpers\ArrayHelper;

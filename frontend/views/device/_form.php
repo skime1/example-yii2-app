@@ -3,7 +3,7 @@
 use common\models\Store;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
-use frontend\hellpers\StoreHelper;
+use frontend\helpers\StoreHelper;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 

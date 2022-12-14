@@ -4,7 +4,8 @@ use common\models\Device;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\helpers\ArrayHelper;
-use frontend\hellpers\StoreHelper;
+use frontend\helpers\StoreHelper;
+use frontend\helpers\ContentHelper;
 use yii\grid\ActionColumn;
 use kartik\grid\GridView;
 use kartik\grid\DataColumn;
@@ -36,7 +37,9 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Store',
                 'attribute' => 'store_id',
-                'value' => 'store.title',
+                'value' => function($model){
+                    return ContentHelper::getValueRelationalModel($model, 'store', 'title');
+                },
                 'filterType' => GridView::FILTER_SELECT2,
                 'filter' => StoreHelper::getExistingStoreTitles(),
                 'filterWidgetOptions' => [
